@@ -842,23 +842,7 @@ public class AutoCompletion {
 				(count == 1 && !getAutoCompleteSingleChoices())) {
 
 			if (popupWindow == null) {
-				popupWindow = new AutoCompletePopupWindow(parentWindow, this);
-				popupWindowListener.install(popupWindow);
-				// Completion is usually done for code, which is always done
-				// LTR, so make completion stuff RTL only if text component is
-				// also RTL.
-				popupWindow
-					.applyComponentOrientation(getTextComponentOrientation());
-				if (renderer != null) {
-					popupWindow.setListCellRenderer(renderer);
-				}
-				if (preferredChoicesWindowSize != null) {
-					popupWindow.setSize(preferredChoicesWindowSize);
-				}
-				if (preferredDescWindowSize != null) {
-					popupWindow
-							.setDescriptionWindowSize(preferredDescWindowSize);
-				}
+				createPopupWindow(); // DBVIS-9118
 			}
 
 			popupWindow.setCompletions(completions);
@@ -892,6 +876,27 @@ public class AutoCompletion {
 
 		return getLineOfCaret();
 
+	}
+
+	// DBVIS-9118 extract and expose to allow subclass to override
+	protected void createPopupWindow() {
+		popupWindow = new AutoCompletePopupWindow(parentWindow, this);
+		popupWindowListener.install(popupWindow);
+		// Completion is usually done for code, which is always done
+		// LTR, so make completion stuff RTL only if text component is
+		// also RTL.
+		popupWindow
+			.applyComponentOrientation(getTextComponentOrientation());
+		if (renderer != null) {
+			popupWindow.setListCellRenderer(renderer);
+		}
+		if (preferredChoicesWindowSize != null) {
+			popupWindow.setSize(preferredChoicesWindowSize);
+		}
+		if (preferredDescWindowSize != null) {
+			popupWindow
+					.setDescriptionWindowSize(preferredDescWindowSize);
+		}
 	}
 
 

@@ -48,8 +48,8 @@ import org.fife.ui.rsyntaxtextarea.PopupWindowDecorator;
  * @version 1.0
  */
 @SuppressWarnings("checkstyle:MultipleVariableDeclarations")
-class AutoCompletePopupWindow extends JWindow implements CaretListener,
-									ListSelectionListener, MouseListener {
+public class AutoCompletePopupWindow extends JWindow implements CaretListener, 	// DBVIS-9118
+	ListSelectionListener, MouseListener {
 
 	/**
 	 * The parent AutoCompletion instance.
