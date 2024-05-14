@@ -23,7 +23,7 @@ import javax.swing.AbstractListModel;
  * @author Robert Futrell
  * @version 1.0
  */
-class CompletionListModel extends AbstractListModel<Completion> {
+public class CompletionListModel extends AbstractListModel<Completion> { // DBVIS-9118
 
 	/**
 	 * Container for items in this model.
