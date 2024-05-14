@@ -138,7 +138,7 @@ public class AutoCompletePopupWindow extends JWindow implements CaretListener, 	
 	 * @param parent The parent window (hosting the text component).
 	 * @param ac The auto-completion instance.
 	 */
-	AutoCompletePopupWindow(Window parent, final AutoCompletion ac) {
+	public AutoCompletePopupWindow(Window parent, final AutoCompletion ac) { // DBVIS-9118
 
 		super(parent);
 		ComponentOrientation o = ac.getTextComponentOrientation();
