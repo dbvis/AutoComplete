@@ -327,6 +327,12 @@ public class AutoCompletion {
 
 	}
 
+	/**
+	 * @return the popup window, if assigned (possibly <code>null</code>)
+	 */
+	public AutoCompletePopupWindow getPopupWindow() {
+		return popupWindow;
+	}
 
 	/**
 	 * Returns the delay between when the user types a character and when the
