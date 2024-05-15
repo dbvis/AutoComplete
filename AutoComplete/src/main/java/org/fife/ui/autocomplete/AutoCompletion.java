@@ -849,7 +849,6 @@ public class AutoCompletion {
 
 			if (popupWindow == null) {
 				popupWindow = createPopupWindow(parentWindow); // DBVIS-9118
-				popupWindow = new AutoCompletePopupWindow(parentWindow, this);
 				popupWindowListener.install(popupWindow);
 				// Completion is usually done for code, which is always done
 				// LTR, so make completion stuff RTL only if text component is
