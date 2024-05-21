@@ -327,6 +327,12 @@ public class AutoCompletion {
 
 	}
 
+	/**
+	 * @return the popup window, if assigned (possibly <code>null</code>)
+	 */
+	public AutoCompletePopupWindow getPopupWindow() {
+		return popupWindow;
+	}
 
 	/**
 	 * Returns the delay between when the user types a character and when the
@@ -842,7 +848,7 @@ public class AutoCompletion {
 				(count == 1 && !getAutoCompleteSingleChoices())) {
 
 			if (popupWindow == null) {
-				popupWindow = new AutoCompletePopupWindow(parentWindow, this);
+				popupWindow = createPopupWindow(parentWindow); // DBVIS-9118
 				popupWindowListener.install(popupWindow);
 				// Completion is usually done for code, which is always done
 				// LTR, so make completion stuff RTL only if text component is
@@ -857,7 +863,7 @@ public class AutoCompletion {
 				}
 				if (preferredDescWindowSize != null) {
 					popupWindow
-							.setDescriptionWindowSize(preferredDescWindowSize);
+						.setDescriptionWindowSize(preferredDescWindowSize);
 				}
 			}
 
@@ -894,6 +900,10 @@ public class AutoCompletion {
 
 	}
 
+	// DBVIS-9118 extract and expose to allow subclass to override and return a custom popup
+	protected AutoCompletePopupWindow createPopupWindow(Window parentWindow) {
+		return new AutoCompletePopupWindow(parentWindow, this);
+	}
 
 	/**
 	 * Removes a listener interested in popup window events from this instance.

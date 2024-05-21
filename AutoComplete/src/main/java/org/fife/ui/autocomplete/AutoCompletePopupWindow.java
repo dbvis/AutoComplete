@@ -48,8 +48,8 @@ import org.fife.ui.rsyntaxtextarea.PopupWindowDecorator;
  * @version 1.0
  */
 @SuppressWarnings("checkstyle:MultipleVariableDeclarations")
-class AutoCompletePopupWindow extends JWindow implements CaretListener,
-									ListSelectionListener, MouseListener {
+public class AutoCompletePopupWindow extends JWindow implements CaretListener, 	// DBVIS-9118
+	ListSelectionListener, MouseListener {
 
 	/**
 	 * The parent AutoCompletion instance.
@@ -138,7 +138,7 @@ class AutoCompletePopupWindow extends JWindow implements CaretListener,
 	 * @param parent The parent window (hosting the text component).
 	 * @param ac The auto-completion instance.
 	 */
-	AutoCompletePopupWindow(Window parent, final AutoCompletion ac) {
+	public AutoCompletePopupWindow(Window parent, final AutoCompletion ac) { // DBVIS-9118
 
 		super(parent);
 		ComponentOrientation o = ac.getTextComponentOrientation();
@@ -300,6 +300,34 @@ class AutoCompletePopupWindow extends JWindow implements CaretListener,
         return descWindowColor;
     }
 
+	// ------------------------------------
+	// DBVIS-9118 added getters and setters
+	// ------------------------------------
+	/**
+	 * @return the {@link CompletionListModel} used by the {@link PopupList}
+	 */
+	public CompletionListModel getModel() {
+		return model;
+	}
+
+	/**
+	 * @return the {@link PopupList}
+	 */
+	public PopupList getList() {
+		return list;
+	}
+
+	/**
+	 * Set a new {@link PopupList}.
+	 *
+	 * @param list the new list (must not be <code>null</code>)
+	 */
+	public void setList(PopupList list) {
+		this.list = list;
+	}
+	// ----------------------------------
+	// end DBVIS-9118 getters and setters
+	// ----------------------------------
 
 	/**
 	 * Returns the default list cell renderer used when a completion provider
@@ -1024,7 +1052,7 @@ class AutoCompletePopupWindow extends JWindow implements CaretListener,
 	/**
 	 * The actual list of completion choices in this popup window.
 	 */
-	private class PopupList extends JList<Completion> {
+	public class PopupList extends JList<Completion> { // DBVIS-9118
 
 		PopupList(CompletionListModel model) {
 			super(model);
