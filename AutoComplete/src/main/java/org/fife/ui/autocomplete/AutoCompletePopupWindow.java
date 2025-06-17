@@ -138,8 +138,18 @@ public class AutoCompletePopupWindow extends JWindow implements CaretListener, 	
 	 * @param parent The parent window (hosting the text component).
 	 * @param ac The auto-completion instance.
 	 */
-	public AutoCompletePopupWindow(Window parent, final AutoCompletion ac) { // DBVIS-9118
+	public AutoCompletePopupWindow(Window parent, final AutoCompletion ac) { // DBVIS-9118, DBVIS-11331
+		this(parent, ac, true);
+	}
 
+	/**
+	 * Constructor for overriding the content pane.
+	 *
+	 * @param parent The parent window (hosting the text component).
+	 * @param ac The auto-completion instance.
+	 * @param createContentPane if <code>false</code>, do not create the content pane
+	 */
+	public AutoCompletePopupWindow(Window parent, final AutoCompletion ac, boolean createContentPane) { // DBVIS-11331
 		super(parent);
 		ComponentOrientation o = ac.getTextComponentOrientation();
 
@@ -151,24 +161,27 @@ public class AutoCompletePopupWindow extends JWindow implements CaretListener, 	
 		list.addListSelectionListener(this);
 		list.addMouseListener(this);
 
-		JPanel contentPane = new JPanel(new BorderLayout());
-		JScrollPane sp = new JScrollPane(list,
-							JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-							JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		if (createContentPane) { // DBVIS-11331
+			JPanel contentPane = new JPanel(new BorderLayout());
+			JScrollPane sp = new JScrollPane(list,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-		// In 1.4, JScrollPane.setCorner() has a bug where it won't accept
-		// JScrollPane.LOWER_TRAILING_CORNER, even though that constant is
-		// defined.  So we have to put the logic added in 1.5 to handle it
-		// here.
-		JPanel corner = new SizeGrip();
-		//sp.setCorner(JScrollPane.LOWER_TRAILING_CORNER, corner);
-		boolean isLeftToRight = o.isLeftToRight();
-	    String str = isLeftToRight ? JScrollPane.LOWER_RIGHT_CORNER :
-	    								JScrollPane.LOWER_LEFT_CORNER;
-	    sp.setCorner(str, corner);
+			// In 1.4, JScrollPane.setCorner() has a bug where it won't accept
+			// JScrollPane.LOWER_TRAILING_CORNER, even though that constant is
+			// defined.  So we have to put the logic added in 1.5 to handle it
+			// here.
+			JPanel corner = new SizeGrip();
+			//sp.setCorner(JScrollPane.LOWER_TRAILING_CORNER, corner);
+			boolean isLeftToRight = o.isLeftToRight();
+			String str = isLeftToRight ? JScrollPane.LOWER_RIGHT_CORNER :
+				JScrollPane.LOWER_LEFT_CORNER;
+			sp.setCorner(str, corner);
 
-		contentPane.add(sp);
-		setContentPane(contentPane);
+			contentPane.add(sp);
+			setContentPane(contentPane);
+		}
+
 		applyComponentOrientation(o);
 
 		// Give apps a chance to decorate us with drop shadows, etc.
