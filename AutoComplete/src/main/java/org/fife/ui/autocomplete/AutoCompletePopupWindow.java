@@ -822,6 +822,14 @@ public class AutoCompletePopupWindow extends JWindow implements CaretListener, 	
 			return;
 		}
 
+		if (ac.getTextComponent() == null) {
+			// DBVIS-11585 Telemetry eventID: 100362213, bug that cannot be reproduced
+			if (AutoCompletion.getDebug()) {
+				System.out.println("PopupWindow: Removing keybindings skipped as text component is NULL");
+			}
+			return;
+		}
+
 		JTextComponent comp = ac.getTextComponent();
 		InputMap im = comp.getInputMap();
 		ActionMap am = comp.getActionMap();
